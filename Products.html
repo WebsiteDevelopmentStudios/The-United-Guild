@@ -330,12 +330,12 @@
         </div>
     </div>
 
-    <script>
+<script>
         // Show donation popup and initiate download
-        function showDonationPopup() {
+        function showDonationPopup(downloadUrl) {
             document.getElementById('donationModal').classList.add('active');
             // Open download link in new tab
-            window.open('downloadUrl', '_blank');
+            window.open(downloadUrl, '_blank');
         }
 
         // Close donation popup
@@ -349,6 +349,6 @@
                 closeDonationPopup();
             }
         });
-    </script>
+</script>
 </body>
 </html>
