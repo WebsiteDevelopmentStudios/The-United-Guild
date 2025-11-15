@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - The United Guild</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0047ab 0%, #1a0033 50%, #0047ab 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+        }
+
+        .products-section {
+            padding-top: 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-bottom: 3rem;
+        }
+
+        .products-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 255, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .product-card h3 {
+            color: #00ffff;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card p {
+            color: #b8e6ff;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: rgba(0, 255, 255, 0.2);
+            border: 2px solid #00ffff;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: rgba(0, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(0, 71, 171, 0.95) 0%, rgba(26, 0, 51, 0.95) 100%);
+            border: 3px solid rgba(0, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.4);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            color: #00ffff;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .modal-content p {
+            color: #b8e6ff;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 0.75rem 2rem;
+            border: 2px solid #00ffff;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .modal-btn.ok {
+            background: rgba(0, 255, 255, 0.2);
+            color: white;
+        }
+
+        .modal-btn.ok:hover {
+            background: rgba(0, 255, 255, 0.4);
+        }
+
+        .modal-btn.donate {
+            background: rgba(0, 255, 100, 0.3);
+            color: white;
+        }
+
+        .modal-btn.donate:hover {
+            background: rgba(0, 255, 100, 0.5);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .products-section {
+                padding-top: 80px;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .products-title {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .modal-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="products-section">
+        <h2 class="products-title">Add-Ons & Resources</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <h3>🎨 Texture Pack Pro</h3>
+                <p>High-resolution textures to enhance your visual experience</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🗺️ Custom Maps Collection</h3>
+                <p>Exclusive maps designed by our community</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>⚔️ Weapons Expansion</h3>
+                <p>New weapons and tools for your adventures</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🏰 Building Blocks Plus</h3>
+                <p>Additional building materials and decorative blocks</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🌟 Shaders Pack</h3>
+                <p>Beautiful lighting and shadow effects</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🎵 Music & Sound Overhaul</h3>
+                <p>Immersive audio experience pack</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🐉 Creatures Expansion</h3>
+                <p>New mobs and creatures to encounter</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🛡️ Armor & Equipment</h3>
+                <p>Exclusive armor sets and gear</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🌍 Biomes Extended</h3>
+                <p>New biomes and terrain generation</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>⚡ Performance Optimizer</h3>
+                <p>Boost FPS and reduce lag</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🎭 Character Skins</h3>
+                <p>Exclusive guild member skins</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🏺 Furniture & Decor</h3>
+                <p>Interior decoration items</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🔮 Magic & Spells</h3>
+                <p>New enchantments and magical abilities</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>🚀 Tech Mod</h3>
+                <p>Advanced technology and machinery</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+            <div class="product-card">
+                <h3>📦 Complete Bundle</h3>
+                <p>All add-ons in one convenient package</p>
+                <button class="download-btn" onclick="showDonationPopup()">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div class="modal" id="donationModal">
+        <div class="modal-content">
+            <h2>💚 We Accept Donations</h2>
+            <p>Your support helps us create more amazing content for the community!</p>
+            <div class="modal-buttons">
+                <button class="modal-btn ok" onclick="closeDonationPopup()">OK</button>
+                <button class="modal-btn donate" onclick="window.open('https://www.paypal.me/Blemmished', '_blank')">Donate</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show donation popup
+        function showDonationPopup() {
+            document.getElementById('donationModal').classList.add('active');
+        }
+
+        // Close donation popup
+        function closeDonationPopup() {
+            document.getElementById('donationModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('donationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDonationPopup();
+            }
+        });
+    </script>
+</body>
+</html>
