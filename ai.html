@@ -386,7 +386,7 @@
     <div class="chat-container">
         <div class="chat-header">
             <h1>Welcome user 😁</h1>
-            <p>Powered by Gemma 3n 4B - Ask anything!</p>
+            <p>Powered by GPT-OSS 120B via Groq - Ask anything!</p>
         </div>
 
         <div class="chat-panel">
@@ -530,23 +530,26 @@
 
         async function getAIResponse(message) {
             try {
-                // Using CORS proxy to bypass browser restrictions
-                const response = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://api.aimlapi.com/chat/completions'), {
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                     method: 'POST',
                     headers: {
-                        'Authorization': 'Bearer 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',
+                        'Authorization': 'Bearer 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',
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: 'openai/gpt-oss-120b',
                         messages: [
                             {
                                 role: 'user',
                                 content: message
                             }
                         ],
-                        max_tokens: 8192,
-                        temperature: 1
+                        model: 'openai/gpt-oss-120b',
+                        temperature: 1,
+                        max_completion_tokens: 8192,
+                        top_p: 1,
+                        stream: false,
+                        reasoning_effort: 'medium',
+                        stop: null
                     })
                 });
 
@@ -554,31 +557,23 @@
                 
                 hideTypingIndicator();
                 
-                console.log('API Response:', data); // Debug log
+                console.log('API Response:', data);
                 
-                // Try multiple response formats
                 if (data.choices && data.choices[0]) {
                     const choice = data.choices[0];
                     
-                    // Format 1: message.content
                     if (choice.message && choice.message.content) {
                         addMessage(choice.message.content, 'ai');
-                    }
-                    // Format 2: text
-                    else if (choice.text) {
+                    } else if (choice.text) {
                         addMessage(choice.text, 'ai');
-                    }
-                    // Format 3: content
-                    else if (choice.content) {
+                    } else if (choice.content) {
                         addMessage(choice.content, 'ai');
-                    }
-                    else {
+                    } else {
                         throw new Error('Unknown response format');
                     }
                 } else if (data.error) {
                     addMessage(`API Error: ${data.error.message || JSON.stringify(data.error)}`, 'ai');
                 } else if (data.content) {
-                    // Direct content response
                     addMessage(data.content, 'ai');
                 } else {
                     addMessage(`Unexpected format. Raw response: ${JSON.stringify(data).substring(0, 200)}`, 'ai');
@@ -587,7 +582,7 @@
             } catch (error) {
                 hideTypingIndicator();
                 console.error('API Error:', error);
-                addMessage(`Connection error: ${error.message}. The AI service may require a backend server to work properly.`, 'ai');
+                addMessage(`Connection error: ${error.message}. Please check your API key and network connection.`, 'ai');
             } finally {
                 chatInput.disabled = false;
                 sendBtn.disabled = false;
