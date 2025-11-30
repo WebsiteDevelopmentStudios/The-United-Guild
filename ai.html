@@ -3,68 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The United Guild</title>
+    <title>The United Guild - AI Chat</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0047ab 0%, #1a0033 50%, #0047ab 100%);
-            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
             color: white;
+            background: #090d17 url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
         }
 
         nav {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 0.75rem 2rem;
-            position: fixed;
             width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
+            padding: 12px 25px;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            position: fixed;
+            top: 0;
+            z-index: 20;
         }
 
-        .nav-links {
+        nav .nav-left {
             display: flex;
-            gap: 2rem;
-            list-style: none;
+            align-items: center;
+            gap: 30px;
         }
 
-        .nav-links a {
+        nav .nav-links a {
             color: white;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            margin: 0 14px;
+            font-size: 18px;
+            font-weight: 500;
+            transition: 0.2s ease;
         }
 
-        .nav-links a:hover {
-            background: rgba(0, 255, 255, 0.2);
-            color: #00ffff;
+        nav .nav-links a:hover {
+            color: #8ab5ff;
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.7);
         }
 
         .chat-container {
-            padding-top: 80px;
+            padding-top: 100px;
             max-width: 1000px;
             margin: 0 auto;
             padding-left: 2rem;
             padding-right: 2rem;
             padding-bottom: 2rem;
-            height: calc(100vh - 80px);
+            height: calc(100vh - 100px);
             display: flex;
             flex-direction: column;
         }
@@ -75,21 +77,21 @@
         }
 
         .chat-header h1 {
-            font-size: 2.5rem;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            font-size: 42px;
+            text-shadow: 0 0 14px #000;
             margin-bottom: 0.5rem;
         }
 
         .chat-header p {
             color: #b8e6ff;
-            font-size: 1.1rem;
+            font-size: 18px;
         }
 
         .chat-panel {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            border-radius: 15px;
+            background: rgba(15, 20, 35, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(88, 101, 242, 0.3);
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
             flex: 1;
@@ -114,12 +116,12 @@
         }
 
         .chat-messages::-webkit-scrollbar-thumb {
-            background: rgba(0, 255, 255, 0.3);
+            background: rgba(88, 101, 242, 0.5);
             border-radius: 4px;
         }
 
         .chat-messages::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 255, 255, 0.5);
+            background: rgba(88, 101, 242, 0.7);
         }
 
         .message {
@@ -155,13 +157,13 @@
         }
 
         .message.user .message-avatar {
-            background: rgba(0, 255, 255, 0.3);
-            border: 2px solid #00ffff;
+            background: rgba(88, 101, 242, 0.3);
+            border: 2px solid #5865F2;
         }
 
         .message.ai .message-avatar {
-            background: rgba(138, 43, 226, 0.3);
-            border: 2px solid #8a2be2;
+            background: rgba(138, 181, 255, 0.3);
+            border: 2px solid #8ab5ff;
             overflow: hidden;
             padding: 0;
         }
@@ -174,20 +176,20 @@
 
         .message-content {
             background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(88, 101, 242, 0.2);
             border-radius: 15px;
             padding: 1rem 1.5rem;
             max-width: 70%;
         }
 
         .message.user .message-content {
-            background: rgba(0, 255, 255, 0.1);
-            border-color: rgba(0, 255, 255, 0.3);
+            background: rgba(88, 101, 242, 0.2);
+            border-color: rgba(88, 101, 242, 0.4);
         }
 
         .message.ai .message-content {
-            background: rgba(138, 43, 226, 0.1);
-            border-color: rgba(138, 43, 226, 0.3);
+            background: rgba(138, 181, 255, 0.1);
+            border-color: rgba(138, 181, 255, 0.3);
         }
 
         .message-text {
@@ -199,7 +201,7 @@
 
         .message-text strong {
             font-weight: bold;
-            color: #00ffff;
+            color: #8ab5ff;
         }
 
         .message-text em {
@@ -214,18 +216,9 @@
             font-family: 'Courier New', monospace;
         }
 
-        .message-text ul, .message-text ol {
-            margin-left: 1.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .message-text li {
-            margin-bottom: 0.3rem;
-        }
-
         .chat-input-container {
             padding: 1.5rem;
-            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            border-top: 1px solid rgba(88, 101, 242, 0.2);
             display: flex;
             gap: 1rem;
         }
@@ -233,7 +226,7 @@
         .chat-input {
             flex: 1;
             background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(0, 255, 255, 0.3);
+            border: 2px solid rgba(88, 101, 242, 0.3);
             border-radius: 25px;
             padding: 1rem 1.5rem;
             color: white;
@@ -244,8 +237,8 @@
 
         .chat-input:focus {
             outline: none;
-            border-color: rgba(0, 255, 255, 0.6);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            border-color: rgba(88, 101, 242, 0.7);
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.2);
         }
 
         .chat-input::placeholder {
@@ -254,20 +247,19 @@
 
         .send-btn {
             padding: 1rem 2rem;
-            background: rgba(0, 255, 255, 0.2);
-            border: 2px solid #00ffff;
+            background: #5865F2;
+            border: none;
             color: white;
-            font-weight: bold;
+            font-weight: 600;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
 
         .send-btn:hover:not(:disabled) {
-            background: rgba(0, 255, 255, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+            background: #6e7bff;
+            transform: scale(1.03);
         }
 
         .send-btn:disabled {
@@ -288,7 +280,7 @@
         .typing-dot {
             width: 8px;
             height: 8px;
-            background: #00ffff;
+            background: #8ab5ff;
             border-radius: 50%;
             animation: typing 1.4s infinite;
         }
@@ -318,38 +310,23 @@
             padding: 2rem;
         }
 
-        .error-message {
-            background: rgba(255, 100, 100, 0.2);
-            border: 1px solid rgba(255, 100, 100, 0.5);
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 1rem;
-            text-align: center;
-        }
-
         @media (max-width: 768px) {
             nav {
-                padding: 0.75rem 1rem;
+                padding: 12px 15px;
             }
 
-            .nav-links {
-                gap: 0.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .nav-links a {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.9rem;
+            .nav-links { 
+                display: none; 
             }
 
             .chat-container {
+                padding-top: 80px;
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
 
             .chat-header h1 {
-                font-size: 2rem;
+                font-size: 32px;
             }
 
             .chat-messages {
@@ -373,13 +350,14 @@
 </head>
 <body>
     <nav>
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="Index.html">Home</a></li>
-                <li><a href="Products.html">Products</a></li>
-                <li><a href="Contact.html">Contact</a></li>
-                <li><a href="ai.html">AI Chat</a></li>
-            </ul>
+        <div class="nav-left">
+            <img src="titlr (1).png" class="logo" alt="The United Guild Logo">
+            <div class="nav-links">
+                <a href="Index.html">Home</a>
+                <a href="Products.html">Products</a>
+                <a href="Contact.html">Contact</a>
+                <a href="ai.html">AI Chat</a>
+            </div>
         </div>
     </nav>
 
@@ -458,7 +436,6 @@
             const messageText = document.createElement('div');
             messageText.className = 'message-text';
             
-            // Convert markdown to HTML for AI messages
             if (sender === 'ai') {
                 messageText.innerHTML = formatMarkdown(text);
             } else {
@@ -474,21 +451,12 @@
         }
 
         function formatMarkdown(text) {
-            // Escape HTML first
             text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            
-            // Bold: **text** or __text__
             text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
             text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');
-            
-            // Italic: *text* or _text_
             text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
             text = text.replace(/_(.+?)_/g, '<em>$1</em>');
-            
-            // Code: `code`
             text = text.replace(/`(.+?)`/g, '<code>$1</code>');
-            
-            // Line breaks
             text = text.replace(/\n/g, '<br>');
             
             return text;
