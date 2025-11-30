@@ -3,67 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The United Guild</title>
+    <title>The United Guild - Products</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0047ab 0%, #1a0033 50%, #0047ab 100%);
-            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
             color: white;
+            background: #090d17 url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
         }
 
         nav {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 0.75rem 2rem;
-            position: fixed;
             width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
+            padding: 12px 25px;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            position: fixed;
+            top: 0;
+            z-index: 20;
         }
 
-        .nav-links {
+        nav .nav-left {
             display: flex;
-            gap: 2rem;
-            list-style: none;
+            align-items: center;
+            gap: 30px;
         }
 
-        .nav-links a {
+        nav .nav-links a {
             color: white;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            margin: 0 14px;
+            font-size: 18px;
+            font-weight: 500;
+            transition: 0.2s ease;
         }
 
-        .nav-links a:hover {
-            background: rgba(0, 255, 255, 0.2);
-            color: #00ffff;
+        nav .nav-links a:hover {
+            color: #8ab5ff;
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.7);
         }
 
         .products-section {
-            padding-top: 100px;
-            max-width: 1200px;
+            padding-top: 120px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding-left: 2rem;
-            padding-right: 2rem;
-            padding-bottom: 3rem;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 60px;
             text-align: center;
         }
 
@@ -79,65 +81,82 @@
         }
 
         .products-title {
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            font-size: 42px;
+            margin-bottom: 50px;
+            text-shadow: 0 0 14px #000;
+            animation: fadeIn 1s ease;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            animation: fadeIn 1.2s ease;
         }
 
         .product-card {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 2rem;
-            transition: all 0.3s ease;
+            background: rgba(15, 20, 35, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(88, 101, 242, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            transition: 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), transparent);
+            opacity: 0;
+            transition: 0.3s ease;
         }
 
         .product-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(0, 255, 255, 0.6);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+            border-color: rgba(88, 101, 242, 0.7);
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.3);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
         }
 
         .product-card h3 {
-            color: #00ffff;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            color: #8ab5ff;
+            font-size: 22px;
+            margin-bottom: 15px;
         }
 
         .product-card p {
             color: #b8e6ff;
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
             line-height: 1.6;
         }
 
         .download-btn {
-            display: inline-block;
-            padding: 0.75rem 2rem;
-            background: rgba(0, 255, 255, 0.2);
-            border: 2px solid #00ffff;
+            width: 100%;
+            padding: 12px;
+            background: #5865F2;
+            border: none;
+            border-radius: 10px;
             color: white;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 25px;
+            font-weight: 600;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.2s ease;
         }
 
         .download-btn:hover {
-            background: rgba(0, 255, 255, 0.4);
-            transform: scale(1.05);
+            background: #6e7bff;
+            transform: scale(1.03);
         }
 
-        /* Popup Modal */
         .modal {
             display: none;
             position: fixed;
@@ -157,13 +176,14 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, rgba(0, 71, 171, 0.95) 0%, rgba(26, 0, 51, 0.95) 100%);
-            border: 3px solid rgba(0, 255, 255, 0.5);
+            background: rgba(15, 20, 35, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(88, 101, 242, 0.5);
             border-radius: 20px;
             padding: 3rem;
             text-align: center;
             max-width: 500px;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 50px rgba(88, 101, 242, 0.4);
             animation: modalSlideIn 0.3s ease;
         }
 
@@ -179,10 +199,10 @@
         }
 
         .modal-content h2 {
-            color: #00ffff;
+            color: #8ab5ff;
             font-size: 2rem;
             margin-bottom: 1.5rem;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            text-shadow: 0 0 14px #000;
         }
 
         .modal-content p {
@@ -198,27 +218,29 @@
         }
 
         .modal-btn {
-            padding: 0.75rem 2rem;
-            border: 2px solid #00ffff;
-            border-radius: 25px;
-            font-weight: bold;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-size: 1rem;
         }
 
         .modal-btn.ok {
-            background: rgba(0, 255, 255, 0.2);
+            background: #5865F2;
             color: white;
         }
 
         .modal-btn.ok:hover {
-            background: rgba(0, 255, 255, 0.4);
+            background: #6e7bff;
+            transform: scale(1.05);
         }
 
         .modal-btn.donate {
             background: rgba(0, 255, 100, 0.3);
             color: white;
+            border: 2px solid rgba(0, 255, 100, 0.6);
         }
 
         .modal-btn.donate:hover {
@@ -226,20 +248,18 @@
             transform: scale(1.05);
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             nav {
-                padding: 0.75rem 1rem;
+                padding: 12px 15px;
             }
 
-            .nav-links {
-                gap: 0.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .nav-links a {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.9rem;
+            .nav-links { 
+                display: none; 
             }
 
             .main-logo {
@@ -248,13 +268,13 @@
             }
 
             .products-section {
-                padding-top: 80px;
+                padding-top: 100px;
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
 
             .products-title {
-                font-size: 2rem;
+                font-size: 32px;
             }
 
             .products-grid {
@@ -278,13 +298,14 @@
 </head>
 <body>
     <nav>
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="Index.html">Home</a></li>
-                <li><a href="Products.html">Products</a></li>
-                <li><a href="Contact.html">Contact</a></li>
-                <li><a href="ai.html">Ai Chat</a></li>
-            </ul>
+        <div class="nav-left">
+            <img src="titlr (1).png" class="logo" alt="The United Guild Logo">
+            <div class="nav-links">
+                <a href="Index.html">Home</a>
+                <a href="Products.html">Products</a>
+                <a href="Contact.html">Contact</a>
+                <a href="ai.html">AI Chat</a>
+            </div>
         </div>
     </nav>
 
@@ -320,7 +341,6 @@
         </div>
     </div>
 
-    <!-- Donation Modal -->
     <div class="modal" id="donationModal">
         <div class="modal-content">
             <h2>💚 We Accept Donations</h2>
@@ -333,24 +353,20 @@
     </div>
 
 <script>
-        // Show donation popup and initiate download
-        function showDonationPopup(downloadUrl) {
-            document.getElementById('donationModal').classList.add('active');
-            // Open download link in new tab
-            window.open(downloadUrl, '_blank');
-        }
+    function showDonationPopup(downloadUrl) {
+        document.getElementById('donationModal').classList.add('active');
+        window.open(downloadUrl, '_blank');
+    }
 
-        // Close donation popup
-        function closeDonationPopup() {
-            document.getElementById('donationModal').classList.remove('active');
-        }
+    function closeDonationPopup() {
+        document.getElementById('donationModal').classList.remove('active');
+    }
 
-        // Close modal when clicking outside
-        document.getElementById('donationModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeDonationPopup();
-            }
-        });
+    document.getElementById('donationModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeDonationPopup();
+        }
+    });
 </script>
 </body>
 </html>
